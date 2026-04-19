@@ -5,7 +5,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"],
+      "@app/*": ["app/*"]
     }
   },
   "exclude": ["node_modules", ".expo", ".agent"]

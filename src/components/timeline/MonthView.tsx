@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
-import { useAppStore, Task } from '@/context/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
+import { Task } from '@/types';
 import { X } from 'lucide-react-native';
 import { TaskCard } from './TaskCard';
 import { MonthHeader } from './MonthHeader';

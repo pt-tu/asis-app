@@ -43,3 +43,4 @@ yarn-error.*
 
 # Agent
 .agent
+docs

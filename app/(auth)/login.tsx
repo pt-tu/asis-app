@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ClayButton } from '@/components/ui/ClayButton';
-import { useAppStore } from '@/context/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {

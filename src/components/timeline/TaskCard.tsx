@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { ClayCard } from '@/components/ui/ClayCard';
-import { TAG_COLORS, Task } from '@/context/useAppStore';
+import { TAG_COLORS } from '@/constants/theme';
+import { Task } from '@/types';
 import { useRouter } from 'expo-router';
 
 export function TaskCard({

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
-import { useAppStore } from '@/context/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import { TaskCard } from './TaskCard';
 import { WeekHeader } from './WeekHeader';
 

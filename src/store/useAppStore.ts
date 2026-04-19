@@ -1,57 +1,6 @@
 import { create } from 'zustand';
-
-// 1. DTO Types reflecting asis-web/src/types/task.ts
-export type TaskTag = 'Work' | 'Study' | 'Health' | 'Finance';
-
-export interface Task {
-  id: string; // Mobile added for dynamic routing params
-  task_name: string;
-  start_time: string; // "HH:mm" format
-  end_time: string; // "HH:mm" format
-  duration_minutes: number;
-  tag: TaskTag;
-}
-
-export interface UserState {
-  isLoggedIn: boolean;
-  name: string;
-  email: string;
-  avatar: string;
-}
-
-export interface FinanceState {
-  fixedIncome: number;
-  foodBudget: number;
-  studyBudget: number;
-  healthBudget: number;
-  isOverdraftWarning: boolean;
-}
-
-export const TAG_COLORS: Record<
-  TaskTag,
-  { bg: string; border: string; text: string }
-> = {
-  Work: {
-    bg: 'bg-orange-100/50 dark:bg-orange-950/30',
-    border: 'border-orange-200 dark:border-orange-800',
-    text: 'text-orange-800 dark:text-orange-400',
-  },
-  Study: {
-    bg: 'bg-sky-100/50 dark:bg-sky-950/30',
-    border: 'border-sky-200 dark:border-sky-800',
-    text: 'text-sky-800 dark:text-sky-400',
-  },
-  Health: {
-    bg: 'bg-emerald-100/50 dark:bg-emerald-950/30',
-    border: 'border-emerald-200 dark:border-emerald-800',
-    text: 'text-emerald-800 dark:text-emerald-400',
-  },
-  Finance: {
-    bg: 'bg-amber-100/50 dark:bg-amber-950/30',
-    border: 'border-amber-200 dark:border-amber-800',
-    text: 'text-amber-800 dark:text-amber-400',
-  },
-};
+import { Task, UserState, FinanceState } from '../types';
+import { TAG_COLORS } from '../constants/theme';
 
 // 2. Initial Mock Data reflecting Medical Student Schedule
 const MOCK_TASKS: Task[] = [
@@ -62,6 +11,7 @@ const MOCK_TASKS: Task[] = [
     end_time: '08:00', // Indicates next day
     duration_minutes: 1440,
     tag: 'Work',
+    isLocked: true,
   },
   {
     id: 't2',

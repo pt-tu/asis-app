@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ClayCard } from '@/components/ui/ClayCard';
-import { useAppStore } from '@/context/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import { useRouter } from 'expo-router';
 import { ArrowLeft, AlertTriangle } from 'lucide-react-native';
 
