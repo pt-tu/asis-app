@@ -1,0 +1,62 @@
+# A.S.I.S React Native Mobile Application - Technical Specification & Implementation Plan
+
+## Goal Description
+Build a cross-platform (iOS/Android) mobile application for the A.S.I.S personal planner that perfectly replicates the current web application's functionality. The app will feature Google OAuth, an AI prompt processor for auto-generating tasks, and a timeline dashboard, designed with a modern Neo-Minimalism and Claymorphism aesthetic.
+
+## 1. Technical Framework & Environment Setup
+- **Framework:** Expo SDK (Managed Workflow) for rapid development and Over-The-Air (OTA) updates.
+- **Language:** TypeScript.
+- **Routing:** Expo Router v3 (file-based routing) using a Bottom Tab Bar and nested Stacks.
+- **API Client:** Apollo Client (mirroring the web app's GraphQL implementation).
+- **Styling Strategy:** NativeWind (Tailwind CSS for React Native) to easily port the web's Tailwind CSS classes, supplemented with custom `StyleSheet` definitions for complex Claymorphism shadows.
+
+## 2. Authentication Strategy
+The web app currently expects `HttpOnly` cookies via standard GraphQL `LOGIN`/`LOGOUT` mutations. For mobile:
+- **Google OAuth:** Use `expo-auth-session/providers/google` to facilitate the standard implicit/authorization code flow natively.
+- **Token Management:** Exchange the OAuth token via the NestJS backend to retrieve a JWT payload.
+- **Secure Storage:** Store the auth JWT securely on the device using `expo-secure-store`. Modify the `apolloClient` auth link to inject this token as an `Authorization: Bearer <token>` header dynamically.
+
+## 3. Data & Offline-First Strategy
+Since users need to view their timeline offline:
+- **State Management:** `zustand` to hold core active app state (e.g. current selected day/filters).
+- **Persistent Storage:** `react-native-mmkv` for ultra-fast, synchronous key-value storage.
+- **Offline Caching:** Configure Apollo Client with `apollo3-cache-persist` connected to MMKV. This ensures the GraphQL cache (Timeline tasks) is loaded offline initially, providing immediate UI feedback, before attempting background sync.
+
+## 4. Navigation & Layout Structure
+Using `expo-router`:
+
+```
+app/
+ ├── _layout.tsx           // Root layout, provides ApolloProvider, AuthProvider
+ ├── (auth)/
+ │    └── login.tsx        // Google OAuth SignIn
+ ├── (tabs)/
+ │    ├── _layout.tsx      // Bottom Tab Navigator definition
+ │    ├── timeline.tsx     // Core Timeline view
+ │    ├── generate.tsx     // AI Prompt TaskInput screen
+ │    └── dashboard.tsx    // Finances/Health overview
+ └── details/
+      └── [taskId].tsx     // Stack screen for granular task editing
+```
+
+## 5. UI/UX Design System (Neo-Minimalism & Claymorphism)
+The web app utilizes soft radius shapes (`rounded-[1.75rem]`) and custom utility classes like `.clay-card`. Since complex box-shadows behave differently on iOS vs Android:
+
+- **Claymorphism Translation:**
+  - **Background Colors:** Must be soft pastel/off-white (`bg-card`).
+  - **IOS Shadows:** Use dual layered views to create soft inner/outer drop shadows (`shadowColor`, `shadowOffset`, `shadowOpacity`, `shadowRadius`).
+  - **Android Shadows:** Elevation properties combined with soft semi-transparent gradient overlays, or native libraries like `react-native-shadow-2` for consistent cross-platform inner shadows.
+- **Typography:** Custom imported geometric sans-serif fonts (e.g. Inter or Plus Jakarta Sans).
+- **Icons:** `lucide-react-native` for cross-platform icon consistency.
+- **Touch Targets:** Enforce a strict minimum 48x48dp target size for mobile specific user-ergonomics.
+
+## Verification Plan
+
+### Automated Tests
+- Type checking with `tsc --noEmit`.
+- Mobile build verification utilizing EAS CLI (`eas build:run`).
+
+### Manual Verification
+1. Attempt login with Google via Expo Go / iOS Simulator and verify a token is persisted via `expo-secure-store`.
+2. Generate an AI prompt off-network to see if the UI gracefully degrades, then toggle network back on to verify immediate sync.
+3. Validate visual parity of clay-cards on both iOS (Simulator) and Android (Emulator) to ensure shadow rendering behaves consistently.
