@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "tmp-app",
-    "slug": "tmp-app",
+    "name": "ASIS",
+    "slug": "asis-app",
     "version": "1.0.0",
+    "scheme": "asis-app",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -26,10 +27,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-secure-store",
-      "expo-web-browser"
-    ]
+    "plugins": ["expo-router", "expo-secure-store", "expo-web-browser"]
   }
 }
