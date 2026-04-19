@@ -1,9 +1,12 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ClayCard } from '../../components/ui/ClayCard';
+import { ClayCard } from '@/components/ui/ClayCard';
 import { DollarSign, Activity } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
 
 export default function DashboardScreen() {
+  const router = useRouter();
+
   return (
     <SafeAreaView className="flex-1 bg-background pt-10">
       <ScrollView
@@ -15,29 +18,41 @@ export default function DashboardScreen() {
         </Text>
 
         <View className="flex-row gap-4 mb-6">
-          <ClayCard className="flex-1 p-4 items-center justify-center min-h-[140px]">
-            <View className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
-              <DollarSign size={24} color="hsl(22, 58%, 50%)" />
-            </View>
-            <Text className="text-sm text-muted-foreground font-medium text-center">
-              Monthly Budget
-            </Text>
-            <Text className="text-2xl font-bold text-foreground mt-1 text-center">
-              Remaining
-            </Text>
-          </ClayCard>
+          <TouchableOpacity
+            className="flex-1"
+            activeOpacity={0.8}
+            onPress={() => router.push('/finance')}
+          >
+            <ClayCard className="flex-1 p-4 items-center justify-center min-h-[140px]">
+              <View className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
+                <DollarSign size={24} color="hsl(22, 58%, 50%)" />
+              </View>
+              <Text className="text-sm text-muted-foreground font-medium text-center">
+                Monthly Budget
+              </Text>
+              <Text className="text-2xl font-bold text-foreground mt-1 text-center">
+                Remaining
+              </Text>
+            </ClayCard>
+          </TouchableOpacity>
 
-          <ClayCard className="flex-1 p-4 items-center justify-center min-h-[140px]">
-            <View className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-3">
-              <Activity size={24} color="hsl(145, 42%, 49%)" />
-            </View>
-            <Text className="text-sm text-muted-foreground font-medium text-center">
-              Health Goals
-            </Text>
-            <Text className="text-2xl font-bold text-foreground mt-1 text-center">
-              On Track
-            </Text>
-          </ClayCard>
+          <TouchableOpacity
+            className="flex-1"
+            activeOpacity={0.8}
+            onPress={() => router.push('/health')}
+          >
+            <ClayCard className="flex-1 p-4 items-center justify-center min-h-[140px]">
+              <View className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-3">
+                <Activity size={24} color="hsl(145, 42%, 49%)" />
+              </View>
+              <Text className="text-sm text-muted-foreground font-medium text-center">
+                Health Goals
+              </Text>
+              <Text className="text-2xl font-bold text-foreground mt-1 text-center">
+                On Track
+              </Text>
+            </ClayCard>
+          </TouchableOpacity>
         </View>
 
         <Text className="text-xl font-bold text-foreground mb-4 px-2 mt-2">

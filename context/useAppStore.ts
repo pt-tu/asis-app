@@ -19,6 +19,14 @@ export interface UserState {
   avatar: string;
 }
 
+export interface FinanceState {
+  fixedIncome: number;
+  foodBudget: number;
+  studyBudget: number;
+  healthBudget: number;
+  isOverdraftWarning: boolean;
+}
+
 export const TAG_COLORS: Record<
   TaskTag,
   { bg: string; border: string; text: string }
@@ -112,19 +120,30 @@ const MOCK_USER: UserState = {
     'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=80&h=80&fit=crop&crop=face',
 };
 
+const DEFAULT_FINANCE: FinanceState = {
+  fixedIncome: 14000000,
+  foodBudget: 4000000,
+  studyBudget: 2000000,
+  healthBudget: 1500000,
+  isOverdraftWarning: false,
+};
+
 // 3. Store Definition
 interface AppStore {
   user: UserState;
   tasks: Task[];
+  finance: FinanceState;
   login: () => void;
   logout: () => void;
   addTask: (task: Omit<Task, 'id'>) => void;
   updateTask: (id: string, updates: Partial<Task>) => void;
+  syncMealCostToBudget: (cost: number) => void;
 }
 
 export const useAppStore = create<AppStore>((set) => ({
   user: DEFAULT_USER,
   tasks: MOCK_TASKS,
+  finance: DEFAULT_FINANCE,
   login: () => set({ user: MOCK_USER }),
   logout: () => set({ user: DEFAULT_USER }),
   addTask: (taskWithoutId) =>
@@ -135,4 +154,15 @@ export const useAppStore = create<AppStore>((set) => ({
     set((state) => ({
       tasks: state.tasks.map((t) => (t.id === id ? { ...t, ...updates } : t)),
     })),
+  syncMealCostToBudget: (cost) =>
+    set((state) => {
+      const newFoodBudget = state.finance.foodBudget - cost;
+      return {
+        finance: {
+          ...state.finance,
+          foodBudget: newFoodBudget,
+          isOverdraftWarning: newFoodBudget < 0,
+        },
+      };
+    }),
 }));

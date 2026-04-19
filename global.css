@@ -46,5 +46,27 @@
     --border: 24 15% 20%;
     --input: 24 15% 20%;
     --ring: 22 55% 55%;
+    --ring: 22 55% 55%;
+  }
+}
+
+@layer components {
+  .shadow-clay {
+    shadow-color: #d1c8b8;
+    shadow-offset: 4px 4px;
+    shadow-opacity: 0.8;
+    shadow-radius: 10px;
+    elevation: 4;
+  }
+  .shadow-clay-inset {
+    background-color: hsl(34 40% 93%);
+    border-top-width: 2px;
+    border-left-width: 2px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    border-top-color: hsl(34 25% 82%);
+    border-left-color: hsl(34 25% 82%);
+    border-bottom-color: #ffffff;
+    border-right-color: #ffffff;
   }
 }

@@ -1,68 +1,59 @@
+import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ClayCard } from '../../components/ui/ClayCard';
-import { useAppStore, TAG_COLORS } from '../../context/useAppStore';
-import { useRouter } from 'expo-router';
+import { useAppStore } from '@/context/useAppStore';
+import { TaskCard } from '@/components/timeline/TaskCard';
+import { WeekView } from '@/components/timeline/WeekView';
+import { MonthView } from '@/components/timeline/MonthView';
+
+type ViewMode = 'Today' | 'Week' | 'Month';
 
 export default function TimelineScreen() {
   const tasks = useAppStore((state) => state.tasks);
-  const router = useRouter();
+  const [viewMode, setViewMode] = useState<ViewMode>('Today');
+
+  const renderToday = () => (
+    <View className="space-y-4">
+      {tasks.map((task, idx) => (
+        <TaskCard key={task.id} task={task} index={idx} prefix="today" />
+      ))}
+    </View>
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-background pt-10">
-      <ScrollView
-        className="flex-1 p-4"
-        contentContainerStyle={{ paddingBottom: 100 }}
-      >
-        <Text className="text-4xl font-bold text-foreground mb-2 px-2">
-          Today
+      <View className="px-4 mb-6">
+        <Text className="text-4xl font-bold text-foreground mb-4 px-2">
+          Schedule
         </Text>
-        <Text className="text-lg text-muted-foreground mb-8 px-2">
-          Medical Overview
-        </Text>
-
-        <View className="space-y-4">
-          {tasks.map((task) => {
-            const colors = TAG_COLORS[task.tag];
-            const hours = Math.floor(task.duration_minutes / 60);
-            const minutes = task.duration_minutes % 60;
-            const durationStr =
-              `${hours > 0 ? hours + 'h ' : ''}${minutes > 0 ? minutes + 'm' : ''}`.trim();
-
+        <View className="flex-row p-1.5 rounded-full items-center shadow-clay-inset mx-1">
+          {['Today', 'Week', 'Month'].map((mode) => {
+            const isActive = viewMode === mode;
             return (
               <TouchableOpacity
-                key={task.id}
-                onPress={() => router.push(`/details/${task.id}`)}
-                activeOpacity={0.8}
+                key={mode}
+                activeOpacity={0.7}
+                onPress={() => setViewMode(mode as ViewMode)}
+                className={`flex-1 py-2.5 items-center rounded-full ${isActive ? 'bg-primary/20' : ''}`}
               >
-                <ClayCard className="mb-4">
-                  <View
-                    className={`flex-row items-center border-l-4 pl-3 ${colors.border}`}
-                  >
-                    <View className="flex-1">
-                      <View className="flex-row justify-between items-start mb-1">
-                        <Text
-                          className="text-lg font-bold text-foreground flex-1 pr-2"
-                          numberOfLines={2}
-                        >
-                          {task.task_name}
-                        </Text>
-                        <View className={`px-2 py-1 rounded-full ${colors.bg}`}>
-                          <Text className={`text-xs font-bold ${colors.text}`}>
-                            {task.tag}
-                          </Text>
-                        </View>
-                      </View>
-                      <Text className="text-sm text-muted-foreground mt-1 font-medium">
-                        {task.start_time} - {task.end_time} • {durationStr}
-                      </Text>
-                    </View>
-                  </View>
-                </ClayCard>
+                <Text
+                  className={`font-bold text-base ${isActive ? 'text-primary' : 'text-muted-foreground'}`}
+                >
+                  {mode}
+                </Text>
               </TouchableOpacity>
             );
           })}
         </View>
+      </View>
+
+      <ScrollView
+        className="flex-1 px-4"
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        {viewMode === 'Today' && renderToday()}
+        {viewMode === 'Week' && <WeekView />}
+        {viewMode === 'Month' && <MonthView />}
       </ScrollView>
     </SafeAreaView>
   );

@@ -9,10 +9,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ClayButton } from '../../components/ui/ClayButton';
-import { ClayCard } from '../../components/ui/ClayCard';
+import { ClayButton } from '@/components/ui/ClayButton';
+import { ClayCard } from '@/components/ui/ClayCard';
 import { Sparkles, CheckCircle2 } from 'lucide-react-native';
-import { useAppStore, Task, TAG_COLORS } from '../../context/useAppStore';
+import { useAppStore, Task, TAG_COLORS } from '@/context/useAppStore';
 import { useRouter } from 'expo-router';
 
 export default function GenerateScreen() {
@@ -86,14 +86,14 @@ export default function GenerateScreen() {
           </View>
 
           {isGenerating ? (
-            <View className="w-full bg-card rounded-[2rem] p-10 border border-border mt-auto items-center justify-center shadow-sm min-h-[220px]">
+            <View className="w-full bg-card rounded-[2rem] p-10 border border-border mt-auto items-center justify-center shadow-clay min-h-[220px]">
               <ActivityIndicator size="large" color="hsl(22, 58%, 50%)" />
               <Text className="text-primary font-bold mt-4 text-lg">
                 Thinking...
               </Text>
             </View>
           ) : generatedTasks ? (
-            <View className="w-full bg-card rounded-[2rem] p-4 border border-border mt-auto shadow-sm">
+            <View className="w-full bg-card rounded-[2rem] p-4 border border-border mt-auto shadow-clay">
               <Text className="text-xl font-bold text-foreground mb-4">
                 Preview Plan
               </Text>
@@ -135,7 +135,7 @@ export default function GenerateScreen() {
               />
             </View>
           ) : (
-            <View className="w-full bg-card rounded-[2rem] p-4 border border-border mt-auto shadow-sm">
+            <View className="w-full bg-card rounded-[2rem] p-4 border border-border mt-auto shadow-clay">
               <TextInput
                 className="w-full min-h-[100px] text-lg text-foreground mb-4 pt-2"
                 multiline

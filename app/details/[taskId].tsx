@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ClayCard } from '../../components/ui/ClayCard';
-import { ClayButton } from '../../components/ui/ClayButton';
-import { useAppStore, TAG_COLORS } from '../../context/useAppStore';
+import { ClayCard } from '@/components/ui/ClayCard';
+import { ClayButton } from '@/components/ui/ClayButton';
+import { useAppStore, TAG_COLORS } from '@/context/useAppStore';
 
 export default function TaskDetailsScreen() {
   const { taskId } = useLocalSearchParams();
