@@ -1,4 +1,4 @@
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ApolloProvider } from '@apollo/client/react';
 import { client } from '../src/graphql/client';
@@ -9,7 +9,7 @@ export default function RootLayout() {
   return (
     <ApolloProvider client={client}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Slot />
+        <Stack screenOptions={{ headerShown: false }} />
       </GestureHandlerRootView>
     </ApolloProvider>
   );

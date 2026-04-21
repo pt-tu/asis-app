@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ClayCard } from '@/components/ui/ClayCard';
+import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
 import { DollarSign, Activity } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 
@@ -8,14 +9,15 @@ export default function DashboardScreen() {
   const router = useRouter();
 
   return (
-    <SafeAreaView className="flex-1 bg-background pt-10">
+    <SafeAreaView className="flex-1 bg-background">
       <ScrollView
-        className="flex-1 p-4"
+        className="flex-1 px-4"
         contentContainerStyle={{ paddingBottom: 100 }}
       >
-        <Text className="text-4xl font-bold text-foreground mb-8 px-2">
-          Overview
-        </Text>
+        {/* Greeting Header */}
+        <DashboardHeader
+          onAvatarPress={() => router.push('/(features)/profile')}
+        />
 
         <View className="flex-row gap-4 mb-6">
           <TouchableOpacity
@@ -55,7 +57,7 @@ export default function DashboardScreen() {
           </TouchableOpacity>
         </View>
 
-        <Text className="text-xl font-bold text-foreground mb-4 px-2 mt-2">
+        <Text className="text-xl font-bold text-foreground mb-4 mt-2">
           Recent Insights
         </Text>
         <ClayCard className="mb-4">
