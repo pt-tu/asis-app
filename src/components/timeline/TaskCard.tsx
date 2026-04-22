@@ -9,10 +9,13 @@ export function TaskCard({
   task,
   index,
   prefix = '',
+  onBeforeNavigate,
 }: {
   task: Task;
   index?: number;
   prefix?: string;
+  /** Called before navigating — use to hide a parent modal first */
+  onBeforeNavigate?: () => Promise<void>;
 }) {
   const router = useRouter();
   const colors = TAG_COLORS[task.tag];
@@ -21,10 +24,17 @@ export function TaskCard({
   const durationStr =
     `${hours > 0 ? hours + 'h ' : ''}${minutes > 0 ? minutes + 'm' : ''}`.trim();
 
+  const handlePress = async () => {
+    if (onBeforeNavigate) {
+      await onBeforeNavigate();
+    }
+    router.push(`/details/${task.id}`);
+  };
+
   return (
     <TouchableOpacity
       key={`${prefix}-${task.id}-${index ?? 0}`}
-      onPress={() => router.push(`/details/${task.id}`)}
+      onPress={handlePress}
       activeOpacity={0.8}
     >
       <ClayCard className="mb-4">

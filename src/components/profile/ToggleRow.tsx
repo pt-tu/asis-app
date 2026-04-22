@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity, Animated } from 'react-native';
-import { useRef, useEffect } from 'react';
+import { View, Text } from 'react-native';
 import { LucideIcon } from 'lucide-react-native';
+import { ClaySwitch } from '@/components/ui/ClaySwitch';
 
 const ACCENT = 'hsl(22, 58%, 50%)';
 const INACTIVE_BG = '#D5CEC7';
@@ -20,30 +20,6 @@ export function ToggleRow({
   icon: Icon,
   isLast = false,
 }: ToggleRowProps) {
-  const translateX = useRef(new Animated.Value(value ? 18 : 2)).current;
-  const bgAnim = useRef(new Animated.Value(value ? 1 : 0)).current;
-
-  useEffect(() => {
-    Animated.parallel([
-      Animated.spring(translateX, {
-        toValue: value ? 18 : 2,
-        useNativeDriver: true,
-        damping: 15,
-        stiffness: 250,
-      }),
-      Animated.timing(bgAnim, {
-        toValue: value ? 1 : 0,
-        duration: 200,
-        useNativeDriver: false,
-      }),
-    ]).start();
-  }, [value]);
-
-  const trackBg = bgAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [INACTIVE_BG, ACCENT],
-  });
-
   return (
     <View
       className="flex-row items-center px-5 py-4"
@@ -68,33 +44,7 @@ export function ToggleRow({
       </Text>
 
       {/* Toggle Track */}
-      <TouchableOpacity activeOpacity={0.8} onPress={onToggle}>
-        <Animated.View
-          style={{
-            width: 44,
-            height: 26,
-            borderRadius: 13,
-            backgroundColor: trackBg,
-            justifyContent: 'center',
-          }}
-        >
-          {/* Thumb */}
-          <Animated.View
-            style={{
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              backgroundColor: '#fff',
-              transform: [{ translateX }],
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.2,
-              shadowRadius: 3,
-              elevation: 3,
-            }}
-          />
-        </Animated.View>
-      </TouchableOpacity>
+      <ClaySwitch value={value} onValueChange={onToggle} />
     </View>
   );
 }

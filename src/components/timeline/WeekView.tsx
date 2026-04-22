@@ -10,7 +10,11 @@ import { useAppStore } from '@/store/useAppStore';
 import { TaskCard } from './TaskCard';
 import { WeekHeader } from './WeekHeader';
 
-export function WeekView() {
+interface Props {
+  onBeforeNavigate?: () => Promise<void>;
+}
+
+export function WeekView({ onBeforeNavigate }: Props) {
   const tasks = useAppStore((state) => state.tasks);
   const { width } = useWindowDimensions();
   // Visual affordance: 5.5 items visible so the 6th is cut in half indicating scrollability.
@@ -119,7 +123,13 @@ export function WeekView() {
       </ScrollView>
       <View className="space-y-4">
         {tasks.map((task, idx) => (
-          <TaskCard key={task.id} task={task} index={idx} prefix="week" />
+          <TaskCard
+            key={task.id}
+            task={task}
+            index={idx}
+            prefix="week"
+            onBeforeNavigate={onBeforeNavigate}
+          />
         ))}
       </View>
     </View>

@@ -8,10 +8,10 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
-  Switch,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ClayButton } from '@/components/ui/ClayButton';
+import { ClaySwitch } from '@/components/ui/ClaySwitch';
 import { Sparkles, CheckSquare, Square, RefreshCcw } from 'lucide-react-native';
 import { Task } from '@/types';
 import { TAG_COLORS } from '@/constants/theme';
@@ -202,11 +202,10 @@ export default function GenerateScreen() {
                 <Text className="text-sm font-bold text-foreground">
                   Smart Adjust (Modify existing tasks)
                 </Text>
-                <Switch
+                <ClaySwitch
                   value={isSmartAdjust}
                   onValueChange={setIsSmartAdjust}
                   disabled={isLoading}
-                  trackColor={{ false: '#d1c8b8', true: 'hsl(22, 58%, 50%)' }}
                 />
               </View>
 

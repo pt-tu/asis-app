@@ -6,14 +6,20 @@ import {
   Modal,
   ActivityIndicator,
   ScrollView,
+  Pressable,
 } from 'react-native';
+
 import { useAppStore } from '@/store/useAppStore';
 import { Task } from '@/types';
 import { X } from 'lucide-react-native';
 import { TaskCard } from './TaskCard';
 import { MonthHeader } from './MonthHeader';
 
-export function MonthView() {
+interface Props {
+  onBeforeNavigate?: () => Promise<void>;
+}
+
+export function MonthView({ onBeforeNavigate }: Props) {
   const tasks = useAppStore((state) => state.tasks);
 
   // Navigation State
@@ -129,8 +135,11 @@ export function MonthView() {
         animationType="slide"
         onRequestClose={() => setModalVisible(false)}
       >
-        <View className="flex-1 justify-end bg-black/40">
-          <View className="bg-background rounded-t-3xl p-6 min-h-[60%] max-h-[80%]">
+        <Pressable
+          className="flex-1 justify-end bg-black/40"
+          onPress={() => setModalVisible(false)}
+        >
+          <Pressable className="bg-background rounded-t-3xl p-6 min-h-[60%] max-h-[80%]">
             <View className="flex-row justify-between items-center mb-6">
               <Text className="text-2xl font-bold text-foreground">
                 Day {selectedDay}
@@ -158,12 +167,13 @@ export function MonthView() {
                     task={task}
                     index={idx}
                     prefix="modal"
+                    onBeforeNavigate={onBeforeNavigate}
                   />
                 ))}
               </ScrollView>
             )}
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </View>
   );

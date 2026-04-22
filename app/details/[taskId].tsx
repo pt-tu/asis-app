@@ -6,7 +6,6 @@ import {
   ScrollView,
   TextInput,
   ActivityIndicator,
-  Switch,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
@@ -14,6 +13,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ClayCard } from '@/components/ui/ClayCard';
 import { ClayButton } from '@/components/ui/ClayButton';
+import { ClaySwitch } from '@/components/ui/ClaySwitch';
+import { ClayTimePicker } from '@/components/ui/ClayTimePicker';
+import { useBottomModalStore } from '@/store/useBottomModalStore';
 import { useAppStore } from '@/store/useAppStore';
 import { TAG_COLORS } from '@/constants/theme';
 import { Task } from '@/types';
@@ -27,6 +29,8 @@ export default function TaskDetailsScreen() {
 
   const idStr = Array.isArray(taskId) ? taskId[0] : taskId;
   const task = useAppStore((state) => state.tasks.find((t) => t.id === idStr));
+
+  const { openModal, closeModal } = useBottomModalStore();
 
   // Local states
   const [isEditing, setIsEditing] = useState(false);
@@ -98,22 +102,49 @@ export default function TaskDetailsScreen() {
           placeholder="Task Name"
         />
         <View className="flex-row gap-4 mb-4">
-          <TextInput
-            className="flex-1 border border-border rounded-xl p-3 text-base bg-secondary"
-            value={editData.start_time}
-            onChangeText={(text) =>
-              setEditData({ ...editData, start_time: text })
-            }
-            placeholder="Start (HH:mm)"
-          />
-          <TextInput
-            className="flex-1 border border-border rounded-xl p-3 text-base bg-secondary"
-            value={editData.end_time}
-            onChangeText={(text) =>
-              setEditData({ ...editData, end_time: text })
-            }
-            placeholder="End (HH:mm)"
-          />
+          <TouchableOpacity
+            className="flex-1 border border-border rounded-xl p-4 bg-secondary flex-row items-center"
+            activeOpacity={0.7}
+            onPress={() => {
+              openModal(
+                <ClayTimePicker
+                  title="Select Start Time"
+                  initialValue={editData.start_time ?? '08:00'}
+                  onCancel={closeModal}
+                  onConfirm={(time) => {
+                    setEditData({ ...editData, start_time: time });
+                    closeModal();
+                  }}
+                />,
+              );
+            }}
+          >
+            <Text className="text-base flex-1 text-foreground">
+              Start: {editData.start_time || 'HH:mm'}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className="flex-1 border border-border rounded-xl p-4 bg-secondary flex-row items-center"
+            activeOpacity={0.7}
+            onPress={() => {
+              openModal(
+                <ClayTimePicker
+                  title="Select End Time"
+                  initialValue={editData.end_time ?? '09:00'}
+                  onCancel={closeModal}
+                  onConfirm={(time) => {
+                    setEditData({ ...editData, end_time: time });
+                    closeModal();
+                  }}
+                />,
+              );
+            }}
+          >
+            <Text className="text-base flex-1 text-foreground">
+              End: {editData.end_time || 'HH:mm'}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View className="flex-row items-center justify-between mb-6">
@@ -127,12 +158,11 @@ export default function TaskDetailsScreen() {
               <Text className="text-base font-bold text-foreground ml-2 flex-1">
                 Smart Adjust Lock
               </Text>
-              <Switch
+              <ClaySwitch
                 value={Boolean(editData.isLocked)}
-                onValueChange={(val) =>
+                onValueChange={(val: boolean) =>
                   setEditData({ ...editData, isLocked: val })
                 }
-                trackColor={{ false: '#d1c8b8', true: 'hsl(22, 58%, 50%)' }}
               />
             </View>
             <Text className="text-xs text-muted-foreground italic">
