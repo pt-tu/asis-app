@@ -1,15 +1,18 @@
 import { Tabs } from 'expo-router';
 import { ListTodo, Sparkles, LayoutDashboard } from 'lucide-react-native';
 import { View } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 export default function TabLayout() {
+  const { colors } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: 'hsl(34, 45%, 96%)', // var(--background)
-          borderTopColor: 'hsl(30, 20%, 86%)', // var(--border)
+          backgroundColor: colors.background,
+          borderTopColor: colors.border,
           minHeight: 80,
           paddingBottom: 24,
           paddingTop: 8,
@@ -19,8 +22,8 @@ export default function TabLayout() {
           shadowRadius: 8,
           elevation: 10,
         },
-        tabBarActiveTintColor: 'hsl(22, 58%, 50%)', // var(--primary)
-        tabBarInactiveTintColor: 'hsl(24, 12%, 48%)', // var(--muted-foreground)
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.text,
       }}
     >
       <Tabs.Screen

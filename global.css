@@ -2,71 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 34 45% 96%;
-    --foreground: 24 30% 18%;
-    --card: 36 40% 98%;
-    --card-foreground: 24 30% 18%;
-    --popover: 36 40% 98%;
-    --popover-foreground: 24 30% 18%;
-    --primary: 22 58% 50%;
-    --primary-foreground: 36 60% 97%;
-    --secondary: 30 30% 92%;
-    --secondary-foreground: 24 35% 30%;
-    --muted: 32 25% 93%;
-    --muted-foreground: 24 12% 48%;
-    --accent: 145 42% 49%;
-    --accent-foreground: 145 60% 12%;
-    --destructive: 0 72% 55%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 30 20% 86%;
-    --input: 30 20% 86%;
-    --ring: 22 58% 50%;
-    --radius: 1.5rem;
-  }
-
-  .dark {
-    --background: 24 20% 8%;
-    --foreground: 34 30% 88%;
-    --card: 24 18% 12%;
-    --card-foreground: 34 30% 88%;
-    --popover: 24 18% 12%;
-    --popover-foreground: 34 30% 88%;
-    --primary: 22 55% 55%;
-    --primary-foreground: 36 60% 97%;
-    --secondary: 24 18% 16%;
-    --secondary-foreground: 34 20% 65%;
-    --muted: 24 15% 16%;
-    --muted-foreground: 30 10% 52%;
-    --accent: 145 38% 45%;
-    --accent-foreground: 145 60% 12%;
-    --destructive: 0 72% 55%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 24 15% 20%;
-    --input: 24 15% 20%;
-    --ring: 22 55% 55%;
-    --ring: 22 55% 55%;
-  }
-}
-
 @layer components {
+  /* Dynamic shadow utility for clay cards in both modes */
   .shadow-clay {
-    shadow-color: #d1c8b8;
+    @apply shadow-sm;
+    shadow-color: hsl(var(--shadow-dark));
     shadow-offset: 4px 4px;
     shadow-opacity: 0.8;
     shadow-radius: 10px;
     elevation: 4;
   }
   .shadow-clay-inset {
-    background-color: hsl(34 40% 93%);
+    background-color: hsl(var(--card));
     border-top-width: 2px;
     border-left-width: 2px;
     border-bottom-width: 1px;
     border-right-width: 1px;
-    border-top-color: hsl(34 25% 82%);
-    border-left-color: hsl(34 25% 82%);
-    border-bottom-color: #ffffff;
-    border-right-color: #ffffff;
+    border-top-color: hsl(var(--shadow-dark));
+    border-left-color: hsl(var(--shadow-dark));
+    border-bottom-color: hsl(var(--shadow-light));
+    border-right-color: hsl(var(--shadow-light));
   }
 }

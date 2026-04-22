@@ -20,13 +20,14 @@ import { StatCard } from '@/components/profile/StatCard';
 import { SettingSection } from '@/components/profile/SettingSection';
 import { ToggleRow } from '@/components/profile/ToggleRow';
 import { InfoRow } from '@/components/profile/InfoRow';
+import { useThemeStore } from '@/store/useThemeStore';
 
 const ACCENT = 'hsl(22, 58%, 50%)';
 const MINT = 'hsl(145, 42%, 49%)';
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const [darkMode, setDarkMode] = useState(false);
+  const { theme, setTheme } = useThemeStore();
   const [emergencyProtocols, setEmergencyProtocols] = useState(true);
   const [pushNotifications, setPushNotifications] = useState(true);
   const [dailyBriefing, setDailyBriefing] = useState(true);
@@ -76,8 +77,8 @@ export default function ProfileScreen() {
           <ToggleRow
             icon={Moon}
             label="Dark Mode"
-            value={darkMode}
-            onToggle={() => setDarkMode((v) => !v)}
+            value={theme === 'dark'}
+            onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           />
           <InfoRow icon={Globe} label="Language" value="English" isLast />
         </SettingSection>
