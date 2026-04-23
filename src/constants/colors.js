@@ -57,4 +57,21 @@ const NAV_THEME = {
   },
 };
 
-module.exports = { NAV_THEME };
+const mapToHsl = (theme) => {
+  return Object.fromEntries(
+    Object.entries(theme).map(([key, value]) => [
+      key,
+      key === 'radius' ? value : `hsl(${value})`,
+    ]),
+  );
+};
+
+const NAV_THEME_HSL = {
+  light: mapToHsl(NAV_THEME.light),
+  dark: mapToHsl(NAV_THEME.dark),
+};
+
+module.exports = {
+  NAV_THEME,
+  NAV_THEME_HSL,
+};

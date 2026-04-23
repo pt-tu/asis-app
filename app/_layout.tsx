@@ -15,17 +15,17 @@ import { useThemeStore } from '../src/store/useThemeStore';
 
 import '../global.css';
 
-import { NAV_THEME } from '../src/constants/nav-theme';
+import { NAV_THEME_HSL } from '../src/constants/theme';
 
 const customDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    background: `hsl(${NAV_THEME.dark.background})`, // NativeWind's Dark Warm Gray
-    primary: `hsl(${NAV_THEME.dark.primary})`, // React Navigation tab active color
-    text: `hsl(${NAV_THEME.dark['muted-foreground']})`, // Inactive tint color (muted-foreground)
-    border: `hsl(${NAV_THEME.dark.border})`, // Tab top border
-    card: `hsl(${NAV_THEME.dark.card})`, // Navigation header/tab bg match
+    background: NAV_THEME_HSL.dark.background, // NativeWind's Dark Warm Gray
+    primary: NAV_THEME_HSL.dark.primary, // React Navigation tab active color
+    text: NAV_THEME_HSL.dark['muted-foreground'], // Inactive tint color (muted-foreground)
+    border: NAV_THEME_HSL.dark.border, // Tab top border
+    card: NAV_THEME_HSL.dark.card, // Navigation header/tab bg match
   },
 };
 
@@ -33,11 +33,11 @@ const customDefaultTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: `hsl(${NAV_THEME.light.background})`, // NativeWind's Beige
-    primary: `hsl(${NAV_THEME.light.primary})`,
-    text: `hsl(${NAV_THEME.light['muted-foreground']})`,
-    border: `hsl(${NAV_THEME.light.border})`,
-    card: `hsl(${NAV_THEME.light.card})`,
+    background: NAV_THEME_HSL.light.background, // NativeWind's Beige
+    primary: NAV_THEME_HSL.light.primary,
+    text: NAV_THEME_HSL.light['muted-foreground'],
+    border: NAV_THEME_HSL.light.border,
+    card: NAV_THEME_HSL.light.card,
   },
 };
 

@@ -25,3 +25,11 @@ export const TAG_COLORS: Record<
     text: 'text-amber-800 dark:text-amber-400',
   },
 };
+
+const colors = require('./colors');
+
+export const NAV_THEME = colors.NAV_THEME;
+export const NAV_THEME_HSL = colors.NAV_THEME_HSL as {
+  light: Record<keyof typeof colors.NAV_THEME.light, string>;
+  dark: Record<keyof typeof colors.NAV_THEME.dark, string>;
+};
